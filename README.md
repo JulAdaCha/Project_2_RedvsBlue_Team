@@ -1,9 +1,6 @@
-# Project 2: Penetration Testing
+# Project 2 Red Vs. Blue
+Penetration Testing
 
-   - Red Team: Offense (attacker) 
-       ELK-Stack specifically Kibana and Kali Linux
-
-   - Blue Team: Defense (target) 
-      Capstone
-
-My slide presentatiion reviews the attack, response and mitigation methods. 
+   - Red Team: Offense (attacker) Kali Linux, and ELK Stack (Kibana)
+   - Blue Team: Defense (target) Capstone
+   - Slide presentatiion reviews the attack, response and mitigation methods. 
